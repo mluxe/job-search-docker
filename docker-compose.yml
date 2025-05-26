@@ -1,0 +1,37 @@
+services:
+  mariadb:
+    image: mariadb:10.6.21
+    container_name: mariadb.job
+    hostname: "mariadb.job"
+    environment:
+      MARIADB_ROOT_PASSWORD: W1zard****
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin.job
+    hostname: "phpmyadmin.job"
+    environment:
+      PMA_HOSTS: mariadb.job
+    ports:
+      - "8110:80"
+
+  webserver:
+    build: ./build/webserver
+    container_name: web.job
+    hostname: "web.job"
+    env_file: env
+    ports:
+      - "8111:80"
+    depends_on:
+      - mariadb
+    volumes:
+      - app_data:/var/www/html
+      - opt_data:/opt
+      - ./data:/opt/app_config
+
+volumes:
+  mariadb_data:
+  app_data:
+  opt_data:
