@@ -5,7 +5,7 @@ echo "select count(*) as total from job_search.users;" > /tmp/check.sql
 cnt=$(mysql -h mariadb.job -u $MARIADB_USERNAME "-p$MARIADB_PASSWORD" job_search  < /tmp/check.sql  | tail -n 1)
 
 
-seeds="CompaniesSeed UsersSeed UserSkillsSeed UserEducationsSeed UserContactsSeed UserWorkExperiencesSeed UserSkillsSeed JobStatusSeed JobsSeed JobApplicationsSeed WatchListsSeed"
+seeds="CompaniesSeed UsersSeed UserStatementsSeed UserSkillsSeed UserEducationsSeed UserContactsSeed UserWorkExperiencesSeed UserSkillsSeed JobStatusSeed JobsSeed JobApplicationsSeed WatchListsSeed"
 
 echo "> $cnt users found"
 
