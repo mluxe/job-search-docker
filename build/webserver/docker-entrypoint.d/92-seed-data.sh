@@ -24,3 +24,5 @@ else
 	echo "  - existing data found, skip"
 
 fi
+
+chown www-data.www-data /var/www/html/api/tmp -R
