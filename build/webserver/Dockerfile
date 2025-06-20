@@ -2,7 +2,7 @@ FROM httpd:2.4
 
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get install -qy mariadb-client \
-    vim git wget php jq curl
+    vim git wget php jq curl iputils-ping
 
 RUN apt-get install -qy php-intl php-mbstring php-opcache php-pdo php-calendar php-ctype php-exif \
           php-ffi php-fileinfo php-ftp php-php-gettext php-iconv php-phar php-posix php-readline \

@@ -5,8 +5,12 @@ DIR=/var/www/html/api
 
 cd $DIR
 
-echo "> install cakephp packages"
-composer install
+if ping -c 1 getcomposer.org > /dev/null 2>&1; then
+  echo "> install cakephp packages"
+  composer install
+else
+  echo "! getcomposer.org is not reachable, skip composer install."
+fi
 
 echo "> update file permissions"
 

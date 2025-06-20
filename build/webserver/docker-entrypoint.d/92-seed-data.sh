@@ -25,4 +25,4 @@ else
 
 fi
 
-chown www-data.www-data /var/www/html/api/tmp -R
+chown www-data:www-data /var/www/html/api/tmp -R

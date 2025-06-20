@@ -22,8 +22,13 @@ git log | head -n 6
 
 if [ "$last_build" != "$current_version" ]
 then
-	echo ">  install packages"
-	npm install
+
+  if ping -c 1 npmjs.com > /dev/null 2>&1; then
+    echo ">  install packages"
+    npm install
+  else
+    echo "! npmjs.com is not reachable, skip npm install."
+  fi
 
 	echo ">  build application"
 	npm run build
@@ -32,7 +37,7 @@ then
 	echo ">  deploy application"
 	cp -R ./build/* /var/www/html
 else
-	echo "> skip react app build"
+	echo "> version unchanged, skip react app build"
 fi
 
 cp ./build/.htaccess /var/www/html

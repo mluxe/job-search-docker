@@ -1,42 +1,48 @@
 #!/bin/bash
 
 DIR=/var/www/html/api
-
 git config --global credential.helper store
 
-cat "https://$GITHUB_USER:$GITHUB_TOKEN@github.com" >> ~/.git-credentials
+# Ping test for github.com
+if ping -c 1 github.com > /dev/null 2>&1; then
 
-if [ -d $DIR/.git ]
-then
-	echo "> update api project code"
-	cd $DIR
-	git reset --hard
-	git pull
+  echo "https://$GITHUB_USER:$GITHUB_TOKEN@github.com" >> ~/.git-credentials
+
+  if [ -d $DIR/.git ]
+  then
+    echo "> update api project code"
+    cd $DIR
+    git reset --hard
+    git pull
+  else
+    echo "> clone api project code"
+    mkdir /var/www/html/api -p
+    cd $DIR
+    git clone https://github.com/mluxe/job-search-api.git $DIR
+  fi
+
+
+  if [ -d /opt/react ]
+  then
+    echo "> update react project code"
+    cd /opt/react
+    git reset --hard
+    git pull
+  else
+    echo "> clone react project code"
+    mkdir /opt/react -p
+    cd /opt/react
+    git clone https://github.com/mluxe/job-search-web.git /opt/react
+  fi
+
+  git submodule set-url packages/framework/react https://github.com/mluxe/js-framework-react.git
+  git submodule set-url packages/framework/core https://github.com/mluxe/js-framework-core.git
+  git submodule sync
+  git submodule update --init --recursive
 else
-	echo "> clone api project code"
-	mkdir /var/www/html/api -p
-	cd $DIR
-	git clone https://github.com/mluxe/job-search-api.git $DIR
+  echo "! github.com is not reachable, skip code update."
 fi
 
-
-if [ -d /opt/react ]
-then
-	echo "> update react project code"
-	cd /opt/react
-	git reset --hard
-	git pull
-else
-	echo "> clone react project code"
-	mkdir /opt/react -p
-	cd /opt/react
-	git clone https://github.com/mluxe/job-search-web.git /opt/react
-fi
-
-git submodule set-url packages/framework/react https://github.com/mluxe/js-framework-react.git
-git submodule set-url packages/framework/core https://github.com/mluxe/js-framework-core.git
-git submodule sync
-git submodule update --init --recursive
 
 
 # apply config
