@@ -6,8 +6,12 @@ git config --global credential.helper store
 
 cd $PROJ_DIR
 
-#mkdir -p $PROJ_DIR/server
-#mkdir -p $PROJ_DIR/client
+
+mkdir -p $PROJ_DIR/server
+mkdir -p $PROJ_DIR/client
+
+git config --global --add safe.directory $PROJ_DIR/server
+git config --global --add safe.directory $PROJ_DIR/client
 
 if [ ! -d $PROJ_DIR/server/.git ]
 then
