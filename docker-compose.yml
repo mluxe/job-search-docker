@@ -30,6 +30,7 @@ services:
       - app_data:/var/www/html
       - opt_data:/opt
       - ./data:/opt/app_config
+      - ./project:/project
 
 volumes:
   mariadb_data:
