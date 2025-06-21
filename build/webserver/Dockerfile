@@ -60,6 +60,9 @@ COPY docker-entrypoint.d/* /docker-entrypoint.d
 # change work directory
 WORKDIR /var/www/html
 
+RUN chmod a+x /docker-entrypoint.sh
+RUN chmod a+x /docker-entrypoint.d/*
+
 ENTRYPOINT ["/docker-entrypoint.sh"]
 #CMD ["/bin/sh", "-c", "while sleep 1000; do :; done" ]
 CMD ["tail", "-f", "/var/www/html/api/logs/error.log" ]
